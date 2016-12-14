@@ -16,3 +16,5 @@
 
 
 SELECT * FROM (SELECT * FROM t1  ORDER BY date DESC) t GROUP BY type
+
+//Если необходимо получить самые первые данные для type то можно просто поменять ORDER BY date [ASC]

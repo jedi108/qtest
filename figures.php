@@ -33,6 +33,10 @@ trait singleTone
 
 }
 
+/**
+ * Class FiguresRegistry
+ * Реестр синглтон фигур
+ */
 class FiguresRegistry
 {
     use singleTone;
@@ -44,6 +48,7 @@ class FiguresRegistry
         foreach ($figures as $figure) {
             self::getInstance()->_figures[] = $figure;
         }
+        return self::getInstance();
     }
 
     public static function getFigures()
@@ -57,6 +62,10 @@ class FiguresRegistry
     }
 }
 
+/**
+ * Class ManageFormat
+ * Супер Тип форматов
+ */
 abstract class ManageFormat
 {
     protected $registryShapes;
@@ -69,6 +78,10 @@ abstract class ManageFormat
     }
 }
 
+/**
+ * Class ManagePlots
+ * формат для точек
+ */
 class ManagePlots extends ManageFormat
 {
     public function make()
@@ -78,6 +91,10 @@ class ManagePlots extends ManageFormat
     }
 }
 
+/**
+ * Class ManageImage
+ * Формат для изображения
+ */
 class ManageImage extends ManageFormat
 {
     public function make()
@@ -87,6 +104,10 @@ class ManageImage extends ManageFormat
     }
 }
 
+/**
+ * Class ManageJson
+ * Формат для json
+ */
 class ManageJson extends ManageFormat
 {
     public function make()
@@ -95,6 +116,10 @@ class ManageJson extends ManageFormat
     }
 }
 
+/**
+ * Class FigureManager
+ * Менеджер фигур
+ */
 class FigureManager
 {
     public function __construct(manageFormat $manageFormat)
@@ -106,12 +131,19 @@ class FigureManager
 
 $shapes = [
     ['type' => 'circle', 'params' => [10, 20, 30]],
-    ['type' => 'circle', 'params' => [100, 200, 300]]
+    ['type' => 'circle', 'params' => [100, 200, 300]],
+];
+
+$image = [
+    ['type' => 'circle', 'params' => [10, 20, 30]],
+    ['type' => 'circle', 'params' => [100, 200, 300]],
+    ['type' => 'triangle', 'params' => [200, 10, 200, 300]],
 ];
 
 
 FiguresRegistry::addFigures($shapes);
-$figureManager = new FigureManager(new ManageImage(FiguresRegistry::getInstance()));
 $figureManager = new FigureManager(new ManagePlots(FiguresRegistry::getInstance()));
 $figureManager = new FigureManager(new ManageJson(FiguresRegistry::getInstance()));
+$figureManager = new FigureManager(new ManageImage(FiguresRegistry::addFigures($image)));
+
 echo PHP_EOL;
