@@ -1,3 +1,8 @@
+
+// Так как у книги может быть несколько авторов, то значи у одного автора может быть несколько книг
+
+
+
 CREATE TABLE Authors
 (
 	idAuthor INTEGER UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
