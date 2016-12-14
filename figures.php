@@ -87,7 +87,7 @@ class ManagePlots extends ManageFormat
     public function make()
     {
         //TODO: use $this->registryShapes->getFigures()
-        echo 'готовим точки' . PHP_EOL;
+        echo 'готовим точки';
     }
 }
 
@@ -100,7 +100,7 @@ class ManageImage extends ManageFormat
     public function make()
     {
         //TODO: use $this->registryShapes->getFigures()
-        echo 'готовим картинку' . PHP_EOL;
+        echo 'готовим картинку';
     }
 }
 
@@ -112,6 +112,7 @@ class ManageJson extends ManageFormat
 {
     public function make()
     {
+        echo 'готовим json:' . PHP_EOL;
         print_r(json_encode($this->registryShapes->getFigures()));
     }
 }
@@ -125,6 +126,7 @@ class FigureManager
     public function __construct(manageFormat $manageFormat)
     {
         $manageFormat->make();
+        echo PHP_EOL . PHP_EOL;
     }
 }
 
@@ -142,8 +144,19 @@ $image = [
 
 
 FiguresRegistry::addFigures($shapes);
+
+FiguresRegistry::addFigures($image);
+
+FiguresRegistry::addFigures([
+    ['type' => 'circle', 'params' => [10, 20, 30]],
+    ['type' => 'circle', 'params' => [100, 200, 300]],
+    ['type' => 'triangle', 'params' => [200, 10, 200, 300]]
+]);
+
+
+
 $figureManager = new FigureManager(new ManagePlots(FiguresRegistry::getInstance()));
 $figureManager = new FigureManager(new ManageJson(FiguresRegistry::getInstance()));
-$figureManager = new FigureManager(new ManageImage(FiguresRegistry::addFigures($image)));
+$figureManager = new FigureManager(new ManageImage(FiguresRegistry::getInstance()));
 
 echo PHP_EOL;
